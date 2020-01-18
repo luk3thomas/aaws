@@ -60,6 +60,10 @@ function assh()
   select opt in "${_assh123[@]}"; do
     case $opt in
       *)
+        if [[ "$opt" == "" ]]; then
+          break
+        fi
+
         unset COLUMNS
         if [[ "$@" == *"@"* ]]; then
           ssh "$_asshu"@"$(echo $opt | cut -d ' ' -f1)"
