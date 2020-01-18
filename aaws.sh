@@ -54,7 +54,7 @@ function assh()
 
   while read -r l; do
     _assh123+=("$l")
-  done <<< "$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].{Name:Tags[?Key==`Name`]|[0].Value,Ip:PrivateIpAddress}' --output text --filter "Name=tag:Name,Values=*${@#*@}*")"
+  done <<< "$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].{Name:Tags[?Key==`Name`]|[0].Value,Ip:PrivateIpAddress}' --output text --filter "Name=tag:Name,Values=*${@#*@}*" | sort -k 2 -t "\t")"
 
   COLUMNS=12
   select opt in "${_assh123[@]}"; do
