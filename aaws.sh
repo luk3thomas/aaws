@@ -1,5 +1,21 @@
 #!/bin/bash
 
+function _aaws_PS1()
+{
+  if [ -z "$AWS_PROFILE" ]; then
+    return 0
+  fi
+
+  for e in ${AAWS_AUTOCOMPLETE[@]}; do
+    if [[ "$AWS_PROFILE" == "$e" ]]; then
+      printf "\e[30;1m[$AWS_PROFILE]\e[0m 🔐 "
+      return 0
+    fi
+  done
+}
+
+PS1="\$(_aaws_PS1)$PS1"
+
 function aaws()
 {
   export AAWS_AUTOCOMPLETE="$(grep '^\[' ~/.aws/credentials | sed -r 's/\[|\]//g')"
@@ -19,9 +35,6 @@ function aaws()
     return 0
   fi
 
-  # Remove the account from our PS1
-  PS1="$(echo "$PS1" | sed -r 's/\\e\[30;1m\[[^\]+]\\e\[0m 🔐 //')"
-
   if [ -z "$@" ]; then
     unset AWS_PROFILE
     return 0
@@ -30,7 +43,6 @@ function aaws()
   for e in ${AAWS_AUTOCOMPLETE[@]}; do
     if [ "$@" == "$e" ]; then
       export AWS_PROFILE=$@
-      PS1="\e[30;1m[$@]\e[0m 🔐 $PS1"
       return 0
     fi
   done
