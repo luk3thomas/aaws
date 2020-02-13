@@ -22,10 +22,11 @@ function aaws()
 
   complete -W "$AAWS_AUTOCOMPLETE" aaws
 
-  if [ "-h " == "$@ " ]; then
-    echo "usages: aaws [options] [<account>]"
+  if [ "-h " == "$@ " ] || [ "--help " == "$@ " ]
+  then
+    echo "usages: aaws [options] [profile]"
     echo ""
-    echo "  aaws       - Clear the current account"
+    echo "  aaws       - Clear the current profile"
     echo "  aaws -h    - Display help text"
     echo "  aaws prod  - Set your AWS_PROFILE to prod"
     return 0
@@ -47,7 +48,7 @@ function aaws()
     fi
   done
 
-  echo $@ "does not exist"
+  echo $@ "profile does not exist"
   return 1
 }
 
