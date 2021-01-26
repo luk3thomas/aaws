@@ -28,6 +28,7 @@ function aaws()
     echo ""
     echo "  aaws       - Clear the current profile"
     echo "  aaws -h    - Display help text"
+    echo "  aaws -l    - Lists the available profiles"
     echo "  aaws prod  - Set your AWS_PROFILE to prod"
     return 0
   fi
@@ -42,11 +43,9 @@ function aaws()
   fi
 
   if [ "-l" == "$@" ]; then
-    printf "Available Profiles:"
     for e in ${AAWS_AUTOCOMPLETE[@]}; do
-      printf " $e"
+      echo " $e"
     done
-    printf "\n"
     return 0
   fi
 
