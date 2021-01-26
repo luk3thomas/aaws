@@ -41,6 +41,15 @@ function aaws()
     return 0
   fi
 
+  if [ "-l" == "$@" ]; then
+    printf "Available Profiles:"
+    for e in ${AAWS_AUTOCOMPLETE[@]}; do
+      printf " $e"
+    done
+    printf "\n"
+    return 0
+  fi
+
   for e in ${AAWS_AUTOCOMPLETE[@]}; do
     if [ "$@" == "$e" ]; then
       export AWS_PROFILE=$@
