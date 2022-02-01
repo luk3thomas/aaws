@@ -49,7 +49,7 @@ function aaws()
     return 0
   fi
 
-  for e in ${AAWS_AUTOCOMPLETE[@]}; do
+  echo $AAWS_AUTOCOMPLETE | while read e; do
     if [[ "$@" == "$e" ]]; then
       export AWS_PROFILE=$@
       return 0
