@@ -18,7 +18,7 @@ PS1="\$(_aaws_PS1)$PS1"
 
 function aaws()
 {
-  export AAWS_AUTOCOMPLETE="$(grep '^\[' ~/.aws/credentials | sed -r 's/\[|\]//g')"
+  export AAWS_AUTOCOMPLETE="$(grep '^\[' ~/.aws/credentials ~/.aws/config | cut -d : -f2 | sed -r -e 's/^\[profile /[/g' -e 's/\[|\]//g' | uniq)"
 
   complete -W "$AAWS_AUTOCOMPLETE" aaws
 
