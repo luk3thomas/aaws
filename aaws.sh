@@ -6,7 +6,7 @@ function _aaws_PS1()
     return 0
   fi
 
-  for e in ${AAWS_AUTOCOMPLETE[@]}; do
+  echo $AAWS_AUTOCOMPLETE | while read e; do
     if [[ "$AWS_PROFILE" == "$e" ]]; then
       printf "\e[30;1m[$AWS_PROFILE]\e[0m 🔐 "
       return 0
@@ -43,7 +43,7 @@ function aaws()
   fi
 
   if [[ "-l" == "$@" ]]; then
-    for e in ${AAWS_AUTOCOMPLETE[@]}; do
+    echo $AAWS_AUTOCOMPLETE | while read e; do
       echo " $e"
     done
     return 0
