@@ -22,7 +22,7 @@ function aaws()
 
   complete -W "$AAWS_AUTOCOMPLETE" aaws
 
-  if [ "-h " == "$@ " ] || [ "--help " == "$@ " ]
+  if [[ "-h " == "$@ " ]] || [[ "--help " == "$@ " ]]
   then
     echo "usages: aaws [options] [profile]"
     echo ""
@@ -33,7 +33,7 @@ function aaws()
     return 0
   fi
 
-  if [ "-q " == "$@ " ]; then
+  if [[ "-q " == "$@ " ]]; then
     return 0
   fi
 
@@ -42,7 +42,7 @@ function aaws()
     return 0
   fi
 
-  if [ "-l" == "$@" ]; then
+  if [[ "-l" == "$@" ]]; then
     for e in ${AAWS_AUTOCOMPLETE[@]}; do
       echo " $e"
     done
@@ -50,7 +50,7 @@ function aaws()
   fi
 
   for e in ${AAWS_AUTOCOMPLETE[@]}; do
-    if [ "$@" == "$e" ]; then
+    if [[ "$@" == "$e" ]]; then
       export AWS_PROFILE=$@
       return 0
     fi

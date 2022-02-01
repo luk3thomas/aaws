@@ -53,3 +53,12 @@ if [ -s $HOME/.aaws/aaws.sh ]; then
   source $HOME/.aaws/aaws.sh
 fi
 ```
+
+### zsh
+
+The script may require extra dependencies to successfully load aaws.
+
+```
+autoload -U bashcompinit; bashcompinit
+autoload -U compinit; compinit
+```
