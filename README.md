@@ -20,16 +20,6 @@ Now you're able to interact with the `aws` CLI
 2013-11-05 21:40:04 luk3thomas.com
 ```
 
-Or you can ssh into EC2 hosts using `assh`
-
-```
-[luk3] 🔐 ~/ $ assh luke.thomas@envoy
-1) 172.1.1.7        envoy-2-staging
-2) 172.1.1.4        envoy-3-staging
-3) 172.1.1.5        envoy-1-staging
-#?
-```
-
 When you're done you can unset your AWS profile by running aaws without any
 arguments
 

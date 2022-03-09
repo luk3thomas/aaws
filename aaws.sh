@@ -60,57 +60,6 @@ function aaws()
   return 1
 }
 
-function assh()
-{
-  if [ -z "$AWS_PROFILE" ]; then
-    echo "No AWS_PROFILE set"
-    return 0
-  fi
-
-  _asshu=""
-  _assh123=()
-  if [[ "$@" == *"@"* ]]; then
-    _asshu="${@%@*}"
-  fi
-
-  while read -r l; do
-    _assh123+=("$l")
-  done <<< "$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].{Name:Tags[?Key==`Name`]|[0].Value,Ip:PrivateIpAddress}' --output text --filter "Name=tag:Name,Values=*${@#*@}*" | sort -k 2 -t "\t")"
-
-  if [[ "${_assh123[0]}" == "" ]]; then
-    echo "Nothing found"
-    return 0
-  fi
-
-  if [[ ${#_assh123[@]} == 1 ]]; then
-    if [[ "$@" == *"@"* ]]; then
-      ssh "$_asshu"@"$(echo ${_assh123[0]} | cut -d ' ' -f1)"
-    else
-      ssh "$(echo ${_assh123[0]} | cut -d ' ' -f1)"
-    fi
-    return 0
-  fi
-
-  COLUMNS=12
-  select opt in "${_assh123[@]}"; do
-    case $opt in
-      *)
-        if [[ "$opt" == "" ]]; then
-          break
-        fi
-
-        unset COLUMNS
-        if [[ "$@" == *"@"* ]]; then
-          ssh "$_asshu"@"$(echo $opt | cut -d ' ' -f1)"
-        else
-          ssh "$(echo $opt | cut -d ' ' -f1)"
-        fi
-        break
-        ;;
-    esac
-  done
-}
-
 # Set the autocomplete vars
 aaws -q
 
